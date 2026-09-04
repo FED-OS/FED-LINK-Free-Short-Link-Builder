@@ -1,0 +1,66 @@
+name: Deploy
+
+# Deployment of the generated bundle. InfinityFree has no official CI API,
+# so this workflow produces a release-ready ZIP and optionally pushes to a
+# mirror (e.g. a second repository or an rsync/ftp endpoint via secrets).
+
+on:
+  push:
+    tags: ["v*"]
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    name: Package deployable bundle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build bundle
+        run: python -m src.main build configs/links.json --output output --zip links.zip
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-bundle
+          path: links.zip
+          retention-days: 90
+
+  mirror:
+    name: Mirror bundle (optional)
+    runs-on: ubuntu-latest
+    needs: package
+    # Only runs when the operator has configured mirror credentials.
+    if: ${{ github.event_name != 'pull_request' && vars.DEPLOY_MIRROR_URL != '' }}
+    steps:
+      - name: Download bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: deploy-bundle
+
+      - name: Publish to mirror endpoint
+        env:
+          MIRROR_URL: ${{ vars.DEPLOY_MIRROR_URL }}
+          MIRROR_TOKEN: ${{ secrets.DEPLOY_MIRROR_TOKEN }}
+        run: |
+          echo "Uploading links.zip to ${MIRROR_URL}"
+          curl --fail-with-body \
+            --silent --show-error \
+            --retry 3 \
+            -H "Authorization: Bearer ${MIRROR_TOKEN}" \
+            --data-binary "@links.zip" \
+            "${MIRROR_URL}"

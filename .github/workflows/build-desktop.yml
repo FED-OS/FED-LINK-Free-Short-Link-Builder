@@ -1,0 +1,72 @@
+name: Build Desktop
+
+# Builds the FED-LINk desktop app (Tkinter GUI) with PyInstaller into
+# standalone executables for Windows, macOS and Linux.
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "src/**"
+      - "assets/**"
+      - "pyinstaller.spec"
+      - ".github/workflows/build-desktop.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            artifact: FED-LINk-Windows
+            ext: .exe
+          - os: macos-latest
+            artifact: FED-LINk-macOS
+            ext: .app
+          - os: ubuntu-latest
+            artifact: FED-LINk-Linux
+            ext: ""
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build executable with PyInstaller
+        run: pyinstaller pyinstaller.spec
+
+      - name: Locate build output
+        id: locate
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ matrix.os }}" = "macos-latest" ]; then
+            echo "path=dist/FED-LINk.app" >> "$GITHUB_OUTPUT"
+          else
+            echo "path=dist/FED-LINk${{ matrix.ext }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ steps.locate.outputs.path }}
+          if-no-files-found: error
+          retention-days: 30
