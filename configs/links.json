@@ -1,0 +1,16 @@
+{
+  "site": "link.fedpromptly.com",
+  "home": "https://fedpromptly.com",
+  "links": {
+    "portfolio": "https://fedpromptly.github.io/portfolio",
+    "game": "https://fedpromptly.github.io/game-project",
+    "docs": "https://fedpromptly.github.io/docs",
+    "blog": "https://fedpromptly.github.io/blog",
+    "resume": "https://fedpromptly.github.io/resume",
+    "shop": "https://fedpromptly.github.io/shop",
+    "app": "https://fedpromptly.github.io/app",
+    "tools": "https://fedpromptly.github.io/tools",
+    "contact": "https://fedpromptly.github.io/contact",
+    "kofi": "https://ko-fi.com/fedpromptly"
+  }
+}

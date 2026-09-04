@@ -1,0 +1,25 @@
+# FED-LINk — YAML links configuration (urlzap-compatible layout).
+# Keep one "- path: /slug" + "url:" entry per short link.
+site: link.fedpromptly.com
+home: https://fedpromptly.com
+links:
+  - path: /portfolio
+    url: https://fedpromptly.github.io/portfolio
+  - path: /game
+    url: https://fedpromptly.github.io/game-project
+  - path: /docs
+    url: https://fedpromptly.github.io/docs
+  - path: /blog
+    url: https://fedpromptly.github.io/blog
+  - path: /resume
+    url: https://fedpromptly.github.io/resume
+  - path: /shop
+    url: https://fedpromptly.github.io/shop
+  - path: /app
+    url: https://fedpromptly.github.io/app
+  - path: /tools
+    url: https://fedpromptly.github.io/tools
+  - path: /contact
+    url: https://fedpromptly.github.io/contact
+  - path: /kofi
+    url: https://ko-fi.com/fedpromptly
