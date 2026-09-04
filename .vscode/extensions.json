@@ -1,0 +1,15 @@
+{
+  "//": "FED-LINk recommended VS Code extensions. Opening the folder prompts to install these once; none are required to build (BUILD.md).",
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "charliermarsh.ruff",
+    "redhat.vscode-yaml",
+    "tamasfe.even-better-toml",
+    "editorconfig.editorconfig",
+    "eamodio.gitlens",
+    "github.vscode-github-actions",
+    "yzhang.markdown-all-in-one",
+    "github.vscode-pull-request-github"
+  ]
+}
