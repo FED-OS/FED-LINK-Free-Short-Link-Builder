@@ -1,0 +1,53 @@
+name: Release
+
+# Creates a GitHub Release with the links.zip bundle attached whenever a
+# version tag (v*) is pushed, including a changelog body since the last tag.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create GitHub release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build release bundle
+        run: python -m src.main build configs/links.json --output output --zip links.zip
+
+      - name: Generate release notes
+        id: notes
+        run: |
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "body<<$EOF" >> "$GITHUB_OUTPUT"
+          echo "## FED-LINk ${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+          echo "" >> "$GITHUB_OUTPUT"
+          echo "Short link bundle generated from \`configs/links.json\`." >> "$GITHUB_OUTPUT"
+          echo "" >> "$GITHUB_OUTPUT"
+          echo "**To deploy on InfinityFree:**" >> "$GITHUB_OUTPUT"
+          echo "1. Download \`links.zip\` below" >> "$GITHUB_OUTPUT"
+          echo "2. Open the InfinityFree control panel → File Manager" >> "$GITHUB_OUTPUT"
+          echo "3. Upload and extract into the \`htdocs\` folder of the subdomain" >> "$GITHUB_OUTPUT"
+          echo "$EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: FED-LINk ${{ github.ref_name }}
+          body: ${{ steps.notes.outputs.body }}
+          files: links.zip

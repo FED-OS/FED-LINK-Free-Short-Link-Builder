@@ -1,0 +1,56 @@
+name: Build Android
+
+# Builds the FED-LINk Android app (Kivy UI) into an APK with Buildozer.
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "src/**"
+      - "buildozer.spec"
+      - ".github/workflows/build-android.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Buildozer dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            build-essential ccache git libncurses5 lld llvm python3 \
+            openjdk-17-jdk autoconf automake libtool pkg-config zip unzip
+          pip install --upgrade pip buildozer cython virtualenv
+
+      - name: Restore Buildozer caches
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.buildozer
+            .buildozer
+          key: buildozer-${{ runner.os }}-${{ hashFiles('buildozer.spec') }}
+          restore-keys: buildozer-${{ runner.os }}-
+
+      - name: Build debug APK
+        run: buildozer -v android debug
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FED-LINk-Android
+          path: bin/*.apk
+          if-no-files-found: error
+          retention-days: 30
