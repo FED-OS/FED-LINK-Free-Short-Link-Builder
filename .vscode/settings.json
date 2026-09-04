@@ -1,0 +1,48 @@
+{
+  "//": "FED-LINk VS Code workspace settings. File-scoped defaults for the team; nothing here is required to build the project (see BUILD.md for the authoritative commands).",
+  "files.eol": "\\n",
+  "files.encoding": "utf8",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+    "**/.ruff_cache": true,
+    "**/*.egg-info": true,
+    ".buildozer": true
+  },
+  "files.watcherExclude": {
+    "**/output/**": true,
+    "**/build/**": true,
+    "**/dist/**": true,
+    "**/.buildozer/**": true
+  },
+  "search.exclude": {
+    "**/output": true,
+    "links.zip": true,
+    "**/dist": true
+  },
+  "python.defaultInterpreterPath": ".venv/bin/python",
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.extraPaths": ["."],
+  "python.terminal.activateEnvironment": true,
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "[markdown]": {
+    "editor.trimExtraWhitespace": false
+  },
+  "markdown.preview.styles": ["./styles.css"],
+  "ruff.enable": true,
+  "ruff.lint.enable": true,
+  "ruff.interpreter": ["python3"],
+  "ruff.nativeServer": true,
+  "ruff.organizeImports": true,
+  "editor.rulers": [100],
+  "editor.tabSize": 4
+}
