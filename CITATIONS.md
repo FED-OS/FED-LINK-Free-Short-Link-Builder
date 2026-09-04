@@ -1,75 +1,69 @@
-# Citation
+---
+layout: default
+title: Citations
+---
 
-If FED-LINk helped you — in a paper, a talk, a course, or a repo you built
-on top of it — here's how to cite it. There is no DOI; cite the repository.
+# Citations
 
-## Preferred citation formats
+This document lists attribution, acknowledgments, and external-resource notes for **FED-LINK Free Short Link Builder**.
 
-**BibTeX:**
+## Project
 
-```bibtex
-@software{fedlink2026,
-  author  = {fedpromptly},
-  title   = {{FED-LINk}: A Build-Time URL Shortener for Static Hosting},
-  year    = {2026},
-  url     = {https://github.com/fedpromptly/infinityfree-shortener-builder},
-  note    = {Version 1.1.0},
-  license = {MIT}
-}
-```
+**Project name:** FED-LINK Free Short Link Builder  
+**Repository:** FED-OS/FED-LINK-Free-Short-Link-Builder  
+**Maintainer:** FED-OS  
 
-**APA:**
+## Third-party services
 
-> fedpromptly. (2026). *FED-LINk: A build-time URL shortener for static
-> hosting* (Version 1.1.0) [Computer software].
-> https://github.com/fedpromptly/infinityfree-shortener-builder
+FED-LINK may use third-party services, libraries, APIs, hosting platforms, or deployment tools depending on the current application configuration.
 
-**IEEE:**
+Examples may include:
 
-> fedpromptly, "FED-LINk: A build-time URL shortener for static hosting,"
-> version 1.1.0. [Software]. GitHub repository. Available:
-> https://github.com/fedpromptly/infinityfree-shortener-builder
+- GitHub and GitHub Pages for source control, automated workflows, and site hosting
+- GitHub Actions for deployment and build automation
+- Supabase for database, authentication, storage, and backend features
+- External APIs used by optional integrations
+- Open-source JavaScript, CSS, HTML, and development libraries
 
-**Plain text:**
+## Placeholder examples
 
-> FED-LINk — a build-time URL shortener for static hosting, by
-> fedpromptly, version 1.1.0, MIT license.
-> https://github.com/fedpromptly/infinityfree-shortener-builder
+The following is displayed as literal text and will not be processed by Jekyll Liquid:
 
-## Citing a specific version
+{% raw %}
+{{FED-LINk}}
+{% endraw %}
 
-Releases are tagged `vX.Y.Z` — see the GitHub Releases page and
-[`CHANGELOG.md`](CHANGELOG.md) for what changed in each. Swap the version
-in the examples above for the tag you actually used, and prefer the tag's
-commit SHA over `main` for reproducibility:
+You may also use this placeholder format in documentation:
 
-```bibtex
-@software{fedlink2026v100,
-  author = {fedpromptly},
-  title  = {{FED-LINk}: A Build-Time URL Shortener for Static Hosting},
-  year   = {2026},
-  url    = {https://github.com/fedpromptly/infinityfree-shortener-builder/releases/tag/v1.0.0},
-  note   = {Version 1.0.0, exact release tag}
-}
-```
+{% raw %}
+{{FED_LINK}}
+{% endraw %}
 
-## If you fork or build on it
+## Attribution policy
 
-MIT requires the copyright notice travel with the code — keep the
-[`LICENSE`](LICENSE) file and credit the upstream in your README (one line
-is fine: "Based on FED-LINk by fedpromptly"). A citation in academic work
-is not legally required, but it is the decent thing and helps others find
-the approach.
+All third-party code, packages, icons, fonts, images, APIs, and services remain the property of their respective owners.
 
-## Related concepts worth citing alongside
+When adding a new third-party dependency or asset to FED-LINK:
 
-The architecture leans on well-known ideas, if you want to cite them too:
+1. Review its license before use.
+2. Keep required copyright notices.
+3. Add attribution when required by the license.
+4. Follow the service provider's terms of use.
+5. Do not claim ownership of third-party materials.
 
-- Apache `mod_alias` `Redirect` directives and `.htaccess` — the Apache
-  HTTP Server documentation, https://httpd.apache.org/docs/
-- Static-site generation as a deployment model — any standard static
-  site generator literature
-- HTTP `301 Moved Permanently` semantics — RFC 9110, Section 15.4.2,
-  https://www.rfc-editor.org/rfc/rfc9110
-- GitHub Actions build pipelines — GitHub documentation,
-  https://docs.github.com/actions
+## Open-source notices
+
+Where applicable, dependency licenses and notices should be available in one or more of the following locations:
+
+- The project source code
+- Package manager dependency files
+- License files included with dependencies
+- The relevant third-party project's official repository or website
+
+## Contact
+
+For corrections, attribution requests, or licensing concerns related to this project, open an issue in the FED-LINK repository.
+
+---
+
+Last updated: September 2026
