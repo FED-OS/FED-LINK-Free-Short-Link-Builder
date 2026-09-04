@@ -1,0 +1,6 @@
+{
+  "links": {
+    "hello": "https://example.github.io/hello-world",
+    "cv": "https://example.github.io/cv.pdf"
+  }
+}

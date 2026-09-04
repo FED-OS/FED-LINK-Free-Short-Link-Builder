@@ -1,0 +1,37 @@
+# FED-LINk — local Docker Compose stack for the builder.
+# Usage:
+#   docker compose -f scripts/docker/docker-compose.yml run --rm builder
+#   docker compose -f scripts/docker/docker-compose.yml up dashboard
+
+services:
+  builder:
+    build:
+      context: ../..
+      dockerfile: scripts/docker/Dockerfile
+    image: fedlink
+    container_name: fedlink-builder
+    volumes:
+      - ../../output:/app/output
+      - ../../links.zip:/app/links.zip
+    command: build configs/links.json --output output --zip links.zip
+
+  validate:
+    image: fedlink
+    depends_on:
+      - builder
+    profiles: ["tools"]
+    command: validate configs/links.json
+
+  dashboard:
+    image: fedlink
+    depends_on:
+      - builder
+    profiles: ["tools"]
+    ports:
+      - "8501:8501"
+    volumes:
+      - ../../examples/streamlit_dashboard:/app/dashboard
+      - ../../configs:/app/configs
+    command: >
+      sh -c "pip install --no-cache-dir streamlit pyyaml
+      && streamlit run dashboard/app.py"

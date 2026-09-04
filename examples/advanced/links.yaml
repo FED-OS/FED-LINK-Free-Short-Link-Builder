@@ -1,0 +1,15 @@
+# Advanced example: urlzap-style YAML with per-link titles.
+# The 'title' is consumed by the custom template below; FED-LINk itself
+# only needs path + url.
+site: link.fedpromptly.com
+home: https://fedpromptly.com
+links:
+  - path: /launch
+    url: https://example.github.io/launch-page
+    title: Launch countdown
+  - path: /press
+    url: https://example.github.io/press-kit
+    title: Press kit
+  - path: /now
+    url: https://example.github.io/now-page
+    title: What I am doing now
