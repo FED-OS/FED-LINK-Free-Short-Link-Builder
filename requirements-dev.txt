@@ -1,0 +1,26 @@
+# FED-LINk development requirements.
+#
+# Everything needed to work on the project: run the test suite, lint,
+# and keep commits clean. Install with:
+#
+#   python -m pip install -r requirements.txt -r requirements-dev.txt
+#
+# (requirements-dev does not re-declare runtime deps — install both.)
+
+# Tests
+pytest>=7.4
+
+# Linting (config lives in pyproject.toml; CI runs `ruff check` and
+# `ruff format --check` over src/ tests/ scripts/ examples/)
+ruff>=0.4
+
+# Git hooks — .pre-commit-config.yaml runs ruff via pre-commit
+pre-commit>=3.5
+
+# Packaging (desktop executables) — optional locally; the
+# build-desktop.yml workflow installs it on demand
+pyinstaller>=6.0
+
+# Streamlit dashboard example — only needed to run
+# examples/streamlit_dashboard
+streamlit>=1.30

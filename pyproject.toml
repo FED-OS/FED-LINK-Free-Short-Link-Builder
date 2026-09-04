@@ -1,0 +1,89 @@
+[build-system]
+# Build backend for the PyPI package (publish.yml runs `python -m build`).
+# setuptools>=61 understands [tool.setuptools] package configuration below.
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "infinityfree-shortener-builder"
+version = "1.1.0"
+description = "FED-LINk: a build-time URL shortener that generates a static redirect bundle for InfinityFree and GitHub Pages."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "fedpromptly" }]
+requires-python = ">=3.10"
+keywords = [
+    "url-shortener",
+    "shortlinks",
+    "static-site",
+    "infinityfree",
+    "redirects",
+    "htaccess",
+    "github-pages",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Environment :: X11 Applications :: Tk",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: WWW/HTTP :: Site Management",
+    "Topic :: Software Development :: Code Generators",
+    "Topic :: Utilities",
+]
+# ADR-0004: core runs on the standard library; PyYAML is a lazy import
+# for .yaml links files. Declaring it as a hard dependency guarantees
+# "pip install infinityfree-shortener-builder" covers every config shape.
+dependencies = ["PyYAML>=6.0"]
+
+[project.urls]
+Homepage = "https://link.fedpromptly.com"
+Repository = "https://github.com/fedpromptly/infinityfree-shortener-builder"
+Documentation = "https://github.com/fedpromptly/infinityfree-shortener-builder/tree/main/docs"
+Changelog = "https://github.com/fedpromptly/infinityfree-shortener-builder/blob/main/CHANGELOG.md"
+Issues = "https://github.com/fedpromptly/infinityfree-shortener-builder/issues"
+
+[project.scripts]
+# After `pip install .`, `fedlink` is the CLI entry point (same engine
+# as `python -m src.main`; src/main.py guards its imports so both work).
+fedlink = "src.main:main"
+
+[tool.setuptools]
+# src/ is a top-level package directory (ADR-0007).
+packages = ["src", "src.parsers", "src.validators", "src.generator", "src.utils"]
+
+[tool.setuptools.package-data]
+# The generator embeds fallback templates in code (see
+# src/generator/html_builder.py and folder_creator.py), so the wheel
+# works without the repo's templates/ directory; no package data needed.
+
+[tool.pytest.ini_options]
+# tests/ import the package from the repo root (python -m src.main is
+# the documented entry), so keep the rootdir importable as-is.
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+# Keep lint scoped to Python source; docs and configs are out of scope.
+include = ["src/**", "tests/**", "scripts/**", "examples/**"]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort ordering
+    "UP", # pyupgrade
+    "B",  # bugbear
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["src"]

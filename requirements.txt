@@ -1,0 +1,11 @@
+# FED-LINk runtime requirements.
+#
+# The generator core (src/) runs on the Python standard library alone
+# (ADR-0004). PyYAML is the only runtime dependency, and it is needed
+# solely when a .yaml links file is parsed — the import is deferred
+# inside src/parsers/yaml_parser.py, so with the default
+# configs/links.json nothing here is strictly required.
+#
+# Install:  python -m pip install -r requirements.txt
+
+pyyaml>=6.0
