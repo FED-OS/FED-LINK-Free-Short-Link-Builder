@@ -1,0 +1,56 @@
+# FED-LINk pre-commit hooks.
+#
+# Mirrors what CI runs (ci.yml lint job): ruff check + format check over
+# src/ tests/ scripts/ examples/. Install:
+#
+#   pip install pre-commit
+#   pre-commit install          # git hook, runs on commit
+#   pre-commit run --all-files  # one-shot over the repo
+#
+# ruff config lives in pyproject.toml (line-length 100, py310 target).
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: &mdfiles |
+          (?x)^(
+              .*\.md|
+          )$
+      - id: end-of-file-fixer
+        exclude: *mdfiles
+      - id: check-yaml
+        args: [--allow-multiple-documents]
+        exclude: buildozer.spec
+      - id: check-toml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: [--maxkb=1024]
+      - id: check-case-conflict
+      - id: detect-private-key
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.10
+    hooks:
+      - id: ruff
+        args: [--fix]
+        files: ^(src|tests|scripts|examples)/
+      - id: ruff-format
+        files: ^(src|tests|scripts|examples)/
+
+  - repo: local
+    hooks:
+      - id: fedlink-smoke-build
+        name: FED-LINk smoke build (validate + build)
+        entry: bash scripts/build.sh
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+      - id: fedlink-tests
+        name: FED-LINk tests
+        entry: python -m pytest -q
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
