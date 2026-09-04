@@ -1,0 +1,40 @@
+# FED-LINk editorconfig — consistent formatting across every editor.
+# https://editorconfig.org
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.{json,json5,toml}]
+indent_size = 2
+
+[*.md]
+# Trailing spaces are sometimes meaningful in Markdown (hard line breaks);
+# editors usually leave them. Trim only if your editor supports the
+# exception below (keep them for safe md rendering).
+trim_trailing_whitespace = false
+
+[*.{sh,bash}]
+indent_size = 2
+
+[Makefile]
+indent_style = tab
+
+[*.{js,css,html}]
+indent_size = 2
+
+[*.{spec}]
+# pyinstaller.spec / buildozer.spec — Python-ish
+indent_size = 4
+
+[*.csv]
+trim_trailing_whitespace = false
